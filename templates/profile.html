@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock title %}
+
+{% block body_content %}
+<div>
+    {% for i in user %}
+        <h5 class="card-header">Your Profile</h5>
+        <div class="card-body">
+            <h5 class="card-title">First Name: {{i.first_name}} </h5>
+            <h5 class="card-text">Last Name: {{i.last_name}} </h5>
+            <p class="card-text">Address: {{i.address}} </p>
+            <p class="card-text">Number:{{i.phone}}  </p>
+            <p class="card-text">Occupation:{{i.occupation}}  </p>
+        </div>
+        <a href="{% url 'edit_profile' %}">
+            <button type="submit" class="btn btn-primary"> Edit Profile</button>
+        </a>
+        <a href="{% url 'user_delete' i.id %}">
+            <button type="submit" class="btn btn-danger"> Delete Profile</button>
+        </a>
+    {% endfor %}
+</div>
+{% endblock body_content %}

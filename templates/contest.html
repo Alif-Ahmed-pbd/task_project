@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>Task List</title>
+{% endblock title %}
+
+{% block body_content %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2 style="text-align: center;"> Contest Task</h2>
+
+<table>
+  <tr>
+    <th>Task Title</th>
+    <th>Task Description</th>
+    <th>Aask Priority</th>
+    <th>Due Date</th>
+    <th>Completion</th>
+    <th>Actions</th>
+  </tr>
+  {% for task in tasks %}
+  <tr>
+    <td>{{ task.task_title }} </td>
+    <td>{{ task.task_description }}</td>
+    <td>{{ task.task_priority }}</td>
+    <td>{{ task.due_date }}</td>
+    <td>{{ task.completion_status }}</td>
+    <td>
+      <a href="{% url 'edittask' task.id %}">
+        <button type="submit" class="btn btn-primary"> Edit Task</button>
+
+      </a>
+      <a href="{% url 'deletetask' task.id %}">
+        <button type="submit" class="btn btn-danger"> Delete Task</button>
+
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+</body>
+</html>
+
+
+{% endblock body_content %}

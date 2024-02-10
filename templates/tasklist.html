@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>Task List</title>
+{% endblock title %}
+
+{% block body_content %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+#myInput {
+  box-sizing: border-box;
+  background-image: url('searchicon.png');
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 230px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+</head>
+<body>
+
+<h2 style="text-align: center;">Task Table</h2>
+
+<div class="dropdown">
+  <button style="text-align: center;" class="dropbtn" onclick="myFunction()">Categories
+    <i class="fa fa-caret-down"></i>
+  </button>
+  <div class="dropdown-content" id="myDropdown">
+    <a class="dropdown-item"href="{% url 'proggraming' %}">Proggraming</a>
+    <a class="dropdown-item" href="{% url 'practice' %}">Practice</a>
+    <a class="dropdown-item" href="{% url 'contest' %}">Contest</a>
+  
+  </div> 
+<script>
+
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+<table>
+  <tr>
+    <th>Task Title</th>
+    <th>Task Description</th>
+    <th>Aask Priority</th>
+    <th>Due Date</th>
+    <th>Completion</th>
+    <th>Actions</th>
+  </tr>
+  {% for task in all_task %}
+  <tr>
+    <td>{{ task.task_title }} </td>
+    <td>{{ task.task_description }}</td>
+    <td>{{ task.task_priority }}</td>
+    <td>{{ task.due_date }}</td>
+    <td>{% if task.completion_status %}Completed{% else %}Not Completed{% endif %}</td>
+    <td>
+      <a href="{% url 'edittask' task.id %}">
+        <button type="submit" class="btn btn-primary"> Edit Task</button>
+
+      </a>
+      <a href="{% url 'deletetask' task.id %}">
+        <button type="submit" class="btn btn-danger"> Delete Task</button>
+      </a>
+      <br>
+      {% if not task.completion_status %}
+      <a href="{% url 'task_completed' task.id %}" class="btn btn-success">Complete Task</a>
+      {% endif %}
+    </br>
+    </td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+</body>
+</html>
+
+
+{% endblock body_content %}
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+</style>
+</head>
+<body style="background-color:white;">
+
+<h2>Search/Filter Dropdown</h2>
+<p>Click on the button to open the dropdown menu, and use the input field to search for a specific dropdown link.</p>
+
+
+
+</body>
+</html>
+
